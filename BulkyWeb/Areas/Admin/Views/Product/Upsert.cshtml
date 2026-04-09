@@ -1,0 +1,133 @@
+﻿@model ProductVM
+
+<div class="card shadow border-0 my-4">
+	<div class="card-header bg-secondary bg-gradient ml-0 py-3">
+		<div class="row">
+			<div class="col-12 text-center">
+				<h2 class="text-white py-2">@(Model.product.ID !=0? "Update" : "Create") Product</h2>
+			</div>
+		</div>
+	</div>
+	<div class="card-body p-4">
+		<form method="post" enctype="multipart/form-data">
+			<input asp-for="product.ID" hidden />
+			<div class="row">
+				<div class="col-10">
+					<div class="border border-1 p-3 ">
+						@* 		<div asp-validation-summary="ModelOnly"></div>*@
+						<div class="form-floating py-2 col-12">
+							<input asp-for="@Model.product.Title" class="form-control border-0 shadow" />
+							<label asp-for="@Model.product.Title" class="ms-2"></label>
+							<span class="text-danger" asp-validation-for="@Model.product.Title"></span>
+						</div>
+						<div class="form py-2 col-12">
+							<label asp-for="@Model.product.Description" class="ms-2 text-muted"></label>
+							<textarea asp-for="@Model.product.Description" class="form-control border-0 shadow"></textarea>
+						</div>
+						<div class="form-floating py-2 col-12">
+							<input asp-for="@Model.product.ISBN" class="form-control border-0 shadow" />
+							<label asp-for="@Model.product.ISBN" class="ms-2"></label>
+							<span class="text-danger" asp-validation-for="@Model.product.ISBN"></span>
+						</div>
+						<div class="form-floating py-2 col-12">
+							<input asp-for="@Model.product.Author" class="form-control border-0 shadow" />
+							<label asp-for="@Model.product.Author" class="ms-2"></label>
+							<span class="text-danger" asp-validation-for="@Model.product.Author"></span>
+						</div>
+						<div class="form-floating py-2 col-12">
+							<input asp-for="@Model.product.ListPrice" class="form-control border-0 shadow" />
+							<label asp-for="@Model.product.ListPrice" class="ms-2"></label>
+							<span class="text-danger" asp-validation-for="@Model.product.ListPrice"></span>
+						</div>
+						<div class="form-floating py-2 col-12">
+							<input asp-for="@Model.product.Price" class="form-control border-0 shadow" />
+							<label asp-for="@Model.product.Price" class="ms-2"></label>
+							<span class="text-danger" asp-validation-for="@Model.product.Price"></span>
+						</div>
+						<div class="form-floating py-2 col-12">
+							<input asp-for="@Model.product.Price50" class="form-control border-0 shadow" />
+							<label asp-for="@Model.product.Price50" class="ms-2"></label>
+							<span class="text-danger" asp-validation-for="@Model.product.Price50"></span>
+						</div>
+						<div class="form-floating py-2 col-12">
+							<input asp-for="@Model.product.Price100" class="form-control border-0 shadow" />
+							<label asp-for="@Model.product.Price100" class="ms-2"></label>
+							<span class="text-danger" asp-validation-for="@Model.product.Price100"></span>
+						</div>
+
+						<div class="form-floating py-2 col-12">
+							<select asp-for="@Model.product.CategoryID" asp-items="@Model.Categories" class="form-select border-0 shadow">
+								<option disabled selected>--Select Category--</option>
+							</select>
+							<label asp-for="@Model.product.CategoryID" class="ms-2"></label>
+							<span class="text-danger" asp-validation-for="@Model.product.CategoryID"></span>
+						</div>
+						<div class="form-floating py-2 col-12">
+							<input type="file" name="files" class="form-control border-0 shadow" multiple />
+							<label asp-for="@Model.product.ProductImages" class="ms-2"></label>
+						</div>
+						<div class="row pt-2">
+							<div class="col-6">
+								@if (Model.product.ID != 0)
+								{
+									<button type="submit" class=" btn btn-primary form-control">Update</button>
+								}
+								else
+								{
+									<button type="submit" class=" btn btn-primary form-control">Create</button>
+								}
+							</div>
+							<div class="col-6">
+								<a asp-controller="Product" asp-action="Index" class="btn btn-outline-primary border-2 form-control">Back To List</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-2">
+					@if(Model.product.ProductImages != null)
+						{
+							foreach(var image in Model.product.ProductImages)
+							{
+								<div class="border p-1 m-2 text-center">
+								<img src="@image.ImageURL" width="100%"
+									 style="border-radius:5px; border:1px solid #bbb9b9" />
+									 <a asp-controller="Product" asp-action="DeleteImage" class="btn btn-danger" asp-route-ImageID ="@image.ID">Delete</a>
+								</div>
+							}
+						}
+						
+				</div>
+
+			</div>
+			
+
+		</form>
+	</div>
+</div>
+
+
+@section Scripts 
+{
+	<script>
+		tinymce.init({
+		  selector: 'textarea',
+		  plugins: [
+			// Core editing features
+			'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'lists', 'searchreplace', 'table', 'visualblocks', 'wordcount',
+			// Your account includes a free trial of TinyMCE premium features
+			// Try the most popular premium features until Mar 7, 2026:
+			'checklist', 'mediaembed', 'casechange', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'advtemplate', 'ai', 'uploadcare', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown','importword', 'exportword', 'exportpdf'
+		  ],
+		  toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough |  addcomment showcomments | spellcheckdialog a11ycheck typography uploadcare | align lineheight | checklist numlist bullist indent outdent',
+		  tinycomments_mode: 'embedded',
+		  tinycomments_author: 'Author name',
+		  mergetags_list: [
+			{ value: 'First.Name', title: 'First Name' },
+			{ value: 'Email', title: 'Email' },
+		  ],
+		  ai_request: (request, respondWith) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
+		  uploadcare_public_key: '081172a31bb1a7aa9ee2',
+		});
+	</script>
+		<partial name="_ValidationScriptsPartial" />
+}

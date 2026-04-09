@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using BulkyBook.DataAccess.Data;
+using BulkyBook.DataAccess.Repository.IRepository;
+using BulkyBook.Models;
+
+namespace BulkyBook.DataAccess.Repository
+{
+    public class ProductImageRepository : Repository<ProductImage>, IProductImageRepository
+    {
+        private readonly AppDbContext _DB;
+        public ProductImageRepository(AppDbContext DB) : base(DB)
+        {
+            _DB = DB;
+        }
+
+        public void Update(ProductImage productImage)
+        {
+            _DB.ProductImages.Update(productImage);
+        }
+    }
+}
