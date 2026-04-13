@@ -33,8 +33,4 @@
     <ProjectReference Include="..\Bulky.DataAccess\BulkyBook.DataAccess.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\Images\Product\" />
-  </ItemGroup>
-
 </Project>
