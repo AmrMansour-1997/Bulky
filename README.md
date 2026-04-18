@@ -28,6 +28,20 @@ The project demonstrates CRUD operations, authentication, role management, and b
 - JavaScript / jQuery
 
 ---
+### 🛠️ Tech Stack
+
+| Category | Technology |
+| :--- | :--- |
+| **Frontend** | ASP.NET Core MVC, Razor Pages, HTML, CSS, JavaScript |
+| **Backend** | C#, ASP.NET Core 7 |
+| **Database** | SQL Server, Entity Framework Core |
+| **Authentication** | ASP.NET Core Identity |
+| **Payment** | Stripe |
+| **Email** | IEmailSender (Identity UI) |
+| **Architecture** | Repository Pattern, Unit of Work, Dependency Injection |
+| **Tools** | Visual Studio 2026 |
+
+---
 
 ## 📸 Screenshots
 <img width="1893" height="242" alt="Screenshot 2026-04-13 191557" src="https://github.com/user-attachments/assets/1606f242-9df7-4446-b3a8-3ef7c8c41ef5" />
@@ -47,10 +61,40 @@ The project demonstrates CRUD operations, authentication, role management, and b
 Connection String Setup
 To run the project on your local machine, please follow these steps:
 
-1-Download Database File (Bulky_2026-04-13.bak) and Restore it in your SSMS 
+1- Clone the Repository
 
-2-Open the appsettings.json file.
+2-Download Database File (Bulky_2026-04-13.bak) and Restore it in your SSMS 
 
-3-Locate the ConnectionStrings section.
+3-Open the appsettings.json file.
 
-4-Verify or update the server name to match your local SQL Server instance
+4-Locate the ConnectionStrings section.
+
+5-Verify or update the server name to match your local SQL Server instance
+
+## Configure Stripe Payment:
+
+-  Step 1 — Add Stripe keys to appsettings.json
+-  Open: appsettings.json
+-  Add or update this section:
+```json
+{
+  "Stripe": {
+    "SecretKey": "your_secret_key",
+    "PublishableKey": "your_publishable_key"
+  }
+}
+```
+👉 You get these keys from your Stripe Dashboard → Developers → API Keys.
+- Step 2 — Add Stripe to Program.cs
+
+- Open:
+```
+BulkyBookWeb/Program.cs
+```
+- Add:
+```
+StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
+```
+
+<h2>This sets Stripe up globally so payment sessions can be created.</h2>
+
